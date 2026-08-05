@@ -1,4 +1,4 @@
-package com.waygo.infrastructure.config.security;
+package com.waygo.infrastructure.security;
 
 import com.waygo.domain.model.*;
 
