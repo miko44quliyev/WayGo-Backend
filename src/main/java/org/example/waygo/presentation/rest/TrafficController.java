@@ -112,6 +112,18 @@ public class TrafficController {
         return getIncidentsUseCase.handle();
     }
 
+    @PostMapping("/incidents")
+    public ResponseEntity<UserReport> submitIncident(@Valid @RequestBody SubmitReportRequest request) {
+        UserReport report = submitReportUseCase.handle(new SubmitReportCommand(
+                request.userId(),
+                request.segmentId(),
+                request.type(),
+                request.description(),
+                request.createdAt()
+        ));
+        return ResponseEntity.status(HttpStatus.CREATED).body(report);
+    }
+
     @GetMapping("/city-stats")
     public CityStats getCityStats() {
         return getCityStatsUseCase.handle();

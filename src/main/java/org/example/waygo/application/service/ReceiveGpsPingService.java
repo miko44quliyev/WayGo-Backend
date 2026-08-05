@@ -3,6 +3,7 @@ package org.example.waygo.application.service;
 import org.example.waygo.application.port.in.GpsPingReceipt;
 import org.example.waygo.application.port.in.ReceiveGpsPingCommand;
 import org.example.waygo.application.port.in.ReceiveGpsPingUseCase;
+import org.example.waygo.application.port.out.IncidentRealtimePublisher;
 import org.example.waygo.application.port.out.GpsPingRepository;
 import org.example.waygo.application.port.out.HistoricalPatternRepository;
 import org.example.waygo.application.port.out.RoadSegmentRepository;
@@ -11,6 +12,7 @@ import org.example.waygo.application.port.out.TrafficSnapshotRepository;
 import org.example.waygo.domain.model.AnomalyStatus;
 import org.example.waygo.domain.model.GpsPing;
 import org.example.waygo.domain.model.HistoricalPattern;
+import org.example.waygo.domain.model.RoadIncident;
 import org.example.waygo.domain.model.RoadSegment;
 import org.example.waygo.domain.model.TrafficAnomaly;
 import org.example.waygo.domain.model.TrafficSnapshot;
@@ -32,19 +34,22 @@ public class ReceiveGpsPingService implements ReceiveGpsPingUseCase {
     private final TrafficSnapshotRepository trafficSnapshotRepository;
     private final HistoricalPatternRepository historicalPatternRepository;
     private final TrafficAnomalyRepository trafficAnomalyRepository;
+    private final IncidentRealtimePublisher incidentRealtimePublisher;
 
     public ReceiveGpsPingService(
             RoadSegmentRepository roadSegmentRepository,
             GpsPingRepository gpsPingRepository,
             TrafficSnapshotRepository trafficSnapshotRepository,
             HistoricalPatternRepository historicalPatternRepository,
-            TrafficAnomalyRepository trafficAnomalyRepository
+            TrafficAnomalyRepository trafficAnomalyRepository,
+            IncidentRealtimePublisher incidentRealtimePublisher
     ) {
         this.roadSegmentRepository = roadSegmentRepository;
         this.gpsPingRepository = gpsPingRepository;
         this.trafficSnapshotRepository = trafficSnapshotRepository;
         this.historicalPatternRepository = historicalPatternRepository;
         this.trafficAnomalyRepository = trafficAnomalyRepository;
+        this.incidentRealtimePublisher = incidentRealtimePublisher;
     }
 
     @Override
@@ -89,6 +94,15 @@ public class ReceiveGpsPingService implements ReceiveGpsPingUseCase {
                     "Traffic speed is significantly below the expected baseline"
             );
             trafficAnomalyRepository.save(anomaly);
+            incidentRealtimePublisher.publishCreated(new RoadIncident(
+                    UUID.nameUUIDFromBytes((segment.id().toString() + command.timestamp()).getBytes()),
+                    segment.id(),
+                    "STATISTICAL_ANOMALY",
+                    "ANOMALY_DETECTION",
+                    anomaly.description(),
+                    command.timestamp(),
+                    true
+            ));
         }
 
         return new GpsPingReceipt(ping, segment, snapshot, anomaly);
