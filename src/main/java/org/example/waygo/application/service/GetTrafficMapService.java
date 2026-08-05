@@ -69,6 +69,7 @@ public class GetTrafficMapService implements GetTrafficMapUseCase {
                 segment.id(),
                 segment.name(),
                 segment.zone(),
+                segment.coordinates(),
                 snapshot.averageSpeedKmh(),
                 snapshot.congestionLevel(),
                 forecast.predictedSpeedKmh(),

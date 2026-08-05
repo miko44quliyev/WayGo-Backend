@@ -10,7 +10,7 @@ public record IncidentEvent(
         String incidentType,
         String source,
         String description,
-        Instant createdAt,
+        String createdAt,
         boolean active
 ) {
     public static IncidentEvent from(RoadIncident incident) {
@@ -21,7 +21,7 @@ public record IncidentEvent(
                 incident.incidentType(),
                 incident.source(),
                 incident.description(),
-                incident.createdAt(),
+                incident.createdAt().toString(),
                 incident.active()
         );
     }
