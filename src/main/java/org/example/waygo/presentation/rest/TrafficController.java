@@ -23,6 +23,7 @@ import org.example.waygo.domain.model.TrafficMapView;
 import org.example.waygo.domain.model.TrafficAnomaly;
 import org.example.waygo.domain.model.UserReport;
 import org.example.waygo.domain.model.WeatherSnapshot;
+import org.example.waygo.infrastructure.google.GoogleMapsGateway;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -53,6 +54,7 @@ public class TrafficController {
     private final GetCityStatsUseCase getCityStatsUseCase;
     private final GetWeatherUseCase getWeatherUseCase;
     private final CalculateSmartEtaUseCase calculateSmartEtaUseCase;
+    private final GoogleMapsGateway googleMapsGateway;
 
     public TrafficController(
             ReceiveGpsPingUseCase receiveGpsPingUseCase,
@@ -63,7 +65,8 @@ public class TrafficController {
             GetIncidentsUseCase getIncidentsUseCase,
             GetCityStatsUseCase getCityStatsUseCase,
             GetWeatherUseCase getWeatherUseCase,
-            CalculateSmartEtaUseCase calculateSmartEtaUseCase
+            CalculateSmartEtaUseCase calculateSmartEtaUseCase,
+            GoogleMapsGateway googleMapsGateway
     ) {
         this.receiveGpsPingUseCase = receiveGpsPingUseCase;
         this.getTrafficMapUseCase = getTrafficMapUseCase;
@@ -74,6 +77,7 @@ public class TrafficController {
         this.getCityStatsUseCase = getCityStatsUseCase;
         this.getWeatherUseCase = getWeatherUseCase;
         this.calculateSmartEtaUseCase = calculateSmartEtaUseCase;
+        this.googleMapsGateway = googleMapsGateway;
     }
 
     @PostMapping("/gps-ping")
