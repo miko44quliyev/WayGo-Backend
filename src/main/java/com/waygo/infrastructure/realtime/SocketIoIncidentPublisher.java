@@ -1,4 +1,4 @@
-﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.infrastructure.realtime;
+﻿package com.waygo.infrastructure.realtime;
 
 import com.corundumstudio.socketio.SocketIOServer;
 import com.waygo.application.port.out.IncidentRealtimePublisher;

@@ -1,4 +1,4 @@
-﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.infrastructure.seed;
+﻿package com.waygo.infrastructure.seed;
 
 import com.waygo.application.port.out.HistoricalPatternRepository;
 import com.waygo.application.port.out.RoadSegmentRepository;

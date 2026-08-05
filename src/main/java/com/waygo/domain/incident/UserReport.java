@@ -1,4 +1,4 @@
-﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.domain.incident;
+﻿package com.waygo.domain.incident;
 
 import java.time.Instant;
 import java.util.Objects;

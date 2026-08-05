@@ -1,4 +1,4 @@
-﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.domain.weather;
+﻿package com.waygo.domain.weather;
 
 public record WeatherSnapshot(
         String locationName,

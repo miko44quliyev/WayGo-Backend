@@ -1,4 +1,4 @@
-﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.domain.traffic;
+﻿package com.waygo.domain.traffic;
 
 import java.util.List;
 import java.util.UUID;

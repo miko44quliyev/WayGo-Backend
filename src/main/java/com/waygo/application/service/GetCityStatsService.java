@@ -1,4 +1,4 @@
-﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.application.service;
+﻿package com.waygo.application.service;
 
 import com.waygo.application.port.in.GetCityStatsUseCase;
 import com.waygo.application.port.out.GpsPingRepository;

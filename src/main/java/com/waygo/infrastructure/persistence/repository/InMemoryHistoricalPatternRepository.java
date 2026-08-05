@@ -1,4 +1,4 @@
-﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.infrastructure.persistence.repository;
+﻿package com.waygo.infrastructure.persistence.repository;
 
 import com.waygo.application.port.out.HistoricalPatternRepository;
 import com.waygo.domain.traffic.HistoricalPattern;

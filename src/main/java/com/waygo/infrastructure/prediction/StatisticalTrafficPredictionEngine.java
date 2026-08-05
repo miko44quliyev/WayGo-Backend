@@ -1,4 +1,4 @@
-﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.infrastructure.prediction;
+﻿package com.waygo.infrastructure.prediction;
 
 import com.waygo.application.port.out.TrafficPredictionEngine;
 import com.waygo.domain.traffic.HistoricalPattern;

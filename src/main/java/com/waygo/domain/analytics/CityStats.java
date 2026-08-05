@@ -1,4 +1,4 @@
-﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.domain.analytics;
+﻿package com.waygo.domain.analytics;
 
 import java.time.Instant;
 import java.util.List;

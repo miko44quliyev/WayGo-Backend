@@ -1,4 +1,4 @@
-﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.api;
+﻿package com.waygo.api;
 
 import com.waygo.application.port.in.*;
 import com.waygo.domain.traffic.*; import com.waygo.domain.incident.*; import com.waygo.domain.weather.*; import com.waygo.domain.analytics.*;

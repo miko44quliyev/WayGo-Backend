@@ -1,4 +1,4 @@
-﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.infrastructure.support;
+﻿package com.waygo.infrastructure.support;
 
 public final class TrafficMath {
 
