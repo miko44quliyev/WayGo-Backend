@@ -1,0 +1,56 @@
+package org.example.waygo.application.service;
+
+import org.example.waygo.application.port.in.GetIncidentsUseCase;
+import org.example.waygo.application.port.out.TrafficAnomalyRepository;
+import org.example.waygo.application.port.out.UserReportRepository;
+import org.example.waygo.domain.model.RoadIncident;
+import org.example.waygo.domain.model.TrafficAnomaly;
+import org.example.waygo.domain.model.UserReport;
+import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class GetIncidentsService implements GetIncidentsUseCase {
+
+    private final UserReportRepository userReportRepository;
+    private final TrafficAnomalyRepository trafficAnomalyRepository;
+
+    public GetIncidentsService(UserReportRepository userReportRepository, TrafficAnomalyRepository trafficAnomalyRepository) {
+        this.userReportRepository = userReportRepository;
+        this.trafficAnomalyRepository = trafficAnomalyRepository;
+    }
+
+    @Override
+    public List<RoadIncident> handle() {
+        List<RoadIncident> incidents = new ArrayList<>();
+        for (UserReport report : userReportRepository.findAll()) {
+            incidents.add(new RoadIncident(
+                    UUID.nameUUIDFromBytes((report.userId() + report.segmentId().toString() + report.createdAt()).getBytes()),
+                    report.segmentId(),
+                    report.type().name(),
+                    "USER_REPORT",
+                    report.description(),
+                    report.createdAt(),
+                    true
+            ));
+        }
+        for (TrafficAnomaly anomaly : trafficAnomalyRepository.findActive()) {
+            incidents.add(new RoadIncident(
+                    UUID.nameUUIDFromBytes((anomaly.segmentId() + anomaly.detectedAt().toString()).getBytes()),
+                    anomaly.segmentId(),
+                    "STATISTICAL_ANOMALY",
+                    "ANOMALY_DETECTION",
+                    anomaly.description(),
+                    anomaly.detectedAt(),
+                    true
+            ));
+        }
+        incidents.sort(Comparator.comparing(RoadIncident::createdAt).reversed());
+        return incidents;
+    }
+}
