@@ -19,6 +19,7 @@ import org.example.waygo.domain.model.TrafficSnapshot;
 import org.example.waygo.infrastructure.support.TrafficMath;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.List;
@@ -95,7 +96,7 @@ public class ReceiveGpsPingService implements ReceiveGpsPingUseCase {
             );
             trafficAnomalyRepository.save(anomaly);
             incidentRealtimePublisher.publishCreated(new RoadIncident(
-                    UUID.nameUUIDFromBytes((segment.id().toString() + command.timestamp()).getBytes()),
+                    UUID.nameUUIDFromBytes((segment.id().toString() + command.timestamp()).getBytes(StandardCharsets.UTF_8)),
                     segment.id(),
                     "STATISTICAL_ANOMALY",
                     "ANOMALY_DETECTION",

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class GetIncidentsService implements GetIncidentsUseCase {
@@ -30,7 +31,7 @@ public class GetIncidentsService implements GetIncidentsUseCase {
         List<RoadIncident> incidents = new ArrayList<>();
         for (UserReport report : userReportRepository.findAll()) {
             incidents.add(new RoadIncident(
-                    UUID.nameUUIDFromBytes((report.userId() + report.segmentId().toString() + report.createdAt()).getBytes()),
+                    UUID.nameUUIDFromBytes((report.userId() + report.segmentId().toString() + report.createdAt()).getBytes(StandardCharsets.UTF_8)),
                     report.segmentId(),
                     report.type().name(),
                     "USER_REPORT",
@@ -41,7 +42,7 @@ public class GetIncidentsService implements GetIncidentsUseCase {
         }
         for (TrafficAnomaly anomaly : trafficAnomalyRepository.findActive()) {
             incidents.add(new RoadIncident(
-                    UUID.nameUUIDFromBytes((anomaly.segmentId() + anomaly.detectedAt().toString()).getBytes()),
+                    UUID.nameUUIDFromBytes((anomaly.segmentId() + anomaly.detectedAt().toString()).getBytes(StandardCharsets.UTF_8)),
                     anomaly.segmentId(),
                     "STATISTICAL_ANOMALY",
                     "ANOMALY_DETECTION",

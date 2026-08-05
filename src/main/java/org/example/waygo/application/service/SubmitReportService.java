@@ -12,6 +12,7 @@ import org.example.waygo.domain.model.TrafficAnomaly;
 import org.example.waygo.domain.model.UserReport;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 @Service
@@ -38,7 +39,7 @@ public class SubmitReportService implements SubmitReportUseCase {
 
         if (command.type() == ReportType.ACCIDENT || command.type() == ReportType.ROAD_CLOSED) {
             RoadIncident incident = new RoadIncident(
-                    UUID.nameUUIDFromBytes((command.userId() + command.segmentId().toString() + command.createdAt()).getBytes()),
+                    UUID.nameUUIDFromBytes((command.userId() + command.segmentId().toString() + command.createdAt()).getBytes(StandardCharsets.UTF_8)),
                     command.segmentId(),
                     command.type().name(),
                     "USER_REPORT",
