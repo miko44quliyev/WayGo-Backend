@@ -138,10 +138,28 @@ public class TrafficController {
         return getWeatherUseCase.handle(new WeatherQuery(locationName, latitude, longitude));
     }
 
-    @GetMapping("/smart-eta")
-    public SmartEtaResult calculateSmartEta(@RequestParam List<UUID> segmentIds) {
-        return calculateSmartEtaUseCase.handle(segmentIds);
+    @GetMapping("/health-telemetry")
+    public TelemetryStatusResponse getHealthTelemetry() {
+        long freeMem = Runtime.getRuntime().freeMemory() / (1024 * 1024);
+        long maxMem = Runtime.getRuntime().maxMemory() / (1024 * 1024);
+        return new TelemetryStatusResponse(
+                "UP",
+                "WayGo Baku Smart Mobility Engine v2.5",
+                Instant.now(),
+                getAnomaliesUseCase.handle().size(),
+                freeMem + "MB / " + maxMem + "MB",
+                "Asia/Baku"
+        );
     }
+
+    public record TelemetryStatusResponse(
+            String status,
+            String engineVersion,
+            Instant timestamp,
+            int activeAnomaliesCount,
+            String jvmMemoryUsage,
+            String timezone
+    ) {}
 
     @PostMapping("/report")
     public ResponseEntity<UserReport> submitReport(@Valid @RequestBody SubmitReportRequest request) {

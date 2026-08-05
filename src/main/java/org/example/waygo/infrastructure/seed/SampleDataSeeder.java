@@ -2,10 +2,13 @@ package org.example.waygo.infrastructure.seed;
 
 import org.example.waygo.application.port.out.HistoricalPatternRepository;
 import org.example.waygo.application.port.out.RoadSegmentRepository;
+import org.example.waygo.application.port.out.TrafficAnomalyRepository;
 import org.example.waygo.application.port.out.TrafficSnapshotRepository;
+import org.example.waygo.domain.model.AnomalyStatus;
 import org.example.waygo.domain.model.Coordinate;
 import org.example.waygo.domain.model.HistoricalPattern;
 import org.example.waygo.domain.model.RoadSegment;
+import org.example.waygo.domain.model.TrafficAnomaly;
 import org.example.waygo.domain.model.TrafficSnapshot;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
@@ -21,15 +24,18 @@ public class SampleDataSeeder {
     private final RoadSegmentRepository roadSegmentRepository;
     private final HistoricalPatternRepository historicalPatternRepository;
     private final TrafficSnapshotRepository trafficSnapshotRepository;
+    private final TrafficAnomalyRepository trafficAnomalyRepository;
 
     public SampleDataSeeder(
             RoadSegmentRepository roadSegmentRepository,
             HistoricalPatternRepository historicalPatternRepository,
-            TrafficSnapshotRepository trafficSnapshotRepository
+            TrafficSnapshotRepository trafficSnapshotRepository,
+            TrafficAnomalyRepository trafficAnomalyRepository
     ) {
         this.roadSegmentRepository = roadSegmentRepository;
         this.historicalPatternRepository = historicalPatternRepository;
         this.trafficSnapshotRepository = trafficSnapshotRepository;
+        this.trafficAnomalyRepository = trafficAnomalyRepository;
     }
 
     @PostConstruct
@@ -86,6 +92,29 @@ public class SampleDataSeeder {
                 new TrafficSnapshot(segments.get(2).id(), Instant.now().minusSeconds(300), 31.0, 38),
                 new TrafficSnapshot(segments.get(3).id(), Instant.now().minusSeconds(240), 26.0, 48),
                 new TrafficSnapshot(segments.get(4).id(), Instant.now().minusSeconds(180), 34.0, 32)
+        ));
+
+        // Seed initial statistical Z-score anomalies for Baku roads
+        trafficAnomalyRepository.save(new TrafficAnomaly(
+                segments.get(0).id(),
+                Instant.now().minusSeconds(300),
+                -2.84,
+                AnomalyStatus.ACTIVE,
+                "Heydar Aliyev Avenue z-score drop"
+        ));
+        trafficAnomalyRepository.save(new TrafficAnomaly(
+                segments.get(1).id(),
+                Instant.now().minusSeconds(600),
+                -2.31,
+                AnomalyStatus.ACTIVE,
+                "Koroglu Metro Corridor congestion spike"
+        ));
+        trafficAnomalyRepository.save(new TrafficAnomaly(
+                segments.get(2).id(),
+                Instant.now().minusSeconds(900),
+                -2.15,
+                AnomalyStatus.ACTIVE,
+                "Ziya Bunyadov slow traffic flow"
         ));
     }
 }
