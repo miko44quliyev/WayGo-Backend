@@ -28,4 +28,7 @@ server:
 logging:
   level:
     root: INFO
-    org.example.waygo: INFO
+    com.waygo: INFO
+
+tomtom:
+  api-key: ${TOMTOM_API_KEY:} # Buraya TomTom API açarınızı yazın
