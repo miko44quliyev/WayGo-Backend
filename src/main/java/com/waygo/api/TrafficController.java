@@ -1,9 +1,7 @@
 package com.waygo.api;
 
-import com.waygo.domain.model.*;
-
 import com.waygo.application.port.in.*;
-   
+import com.waygo.domain.model.*;
 import com.waygo.infrastructure.external.tomtom.TomTomMapsGateway;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +34,7 @@ public class TrafficController {
     private final GetCityStatsUseCase getCityStatsUseCase;
     private final GetWeatherUseCase getWeatherUseCase;
     private final CalculateSmartEtaUseCase calculateSmartEtaUseCase;
-    private final TomTomMapsGateway TomTomMapsGateway;
+    private final TomTomMapsGateway tomTomMapsGateway;
 
     public TrafficController(
             ReceiveGpsPingUseCase receiveGpsPingUseCase,
@@ -47,7 +46,7 @@ public class TrafficController {
             GetCityStatsUseCase getCityStatsUseCase,
             GetWeatherUseCase getWeatherUseCase,
             CalculateSmartEtaUseCase calculateSmartEtaUseCase,
-            TomTomMapsGateway TomTomMapsGateway
+            TomTomMapsGateway tomTomMapsGateway
     ) {
         this.receiveGpsPingUseCase = receiveGpsPingUseCase;
         this.getTrafficMapUseCase = getTrafficMapUseCase;
@@ -58,7 +57,7 @@ public class TrafficController {
         this.getCityStatsUseCase = getCityStatsUseCase;
         this.getWeatherUseCase = getWeatherUseCase;
         this.calculateSmartEtaUseCase = calculateSmartEtaUseCase;
-        this.TomTomMapsGateway = TomTomMapsGateway;
+        this.tomTomMapsGateway = tomTomMapsGateway;
     }
 
     @PostMapping("/gps-ping")
@@ -81,10 +80,10 @@ public class TrafficController {
     @GetMapping("/predict")
     public TrafficForecast predictTraffic(
             @RequestParam UUID segmentId,
-            @RequestParam(defaultValue = "MONDAY") DayOfWeek dayOfWeek,
-            @RequestParam(defaultValue = "8") int hour
+            @RequestParam DayOfWeek dayOfWeek,
+            @RequestParam int hourOfDay
     ) {
-        return predictTrafficUseCase.handle(new PredictTrafficQuery(segmentId, dayOfWeek, hour));
+        return predictTrafficUseCase.handle(new PredictTrafficQuery(segmentId, dayOfWeek, hourOfDay));
     }
 
     @GetMapping("/anomalies")
@@ -97,18 +96,6 @@ public class TrafficController {
         return getIncidentsUseCase.handle();
     }
 
-    @PostMapping("/incidents")
-    public ResponseEntity<UserReport> submitIncident(@Valid @RequestBody SubmitReportRequest request) {
-        UserReport report = submitReportUseCase.handle(new SubmitReportCommand(
-                request.userId(),
-                request.segmentId(),
-                request.type(),
-                request.description(),
-                request.createdAt()
-        ));
-        return ResponseEntity.status(HttpStatus.CREATED).body(report);
-    }
-
     @GetMapping("/city-stats")
     public CityStats getCityStats() {
         return getCityStatsUseCase.handle();
@@ -116,14 +103,19 @@ public class TrafficController {
 
     @GetMapping("/weather")
     public WeatherSnapshot getWeather(
-            @RequestParam(defaultValue = "Baku") String locationName,
             @RequestParam(defaultValue = "40.4093") double latitude,
             @RequestParam(defaultValue = "49.8671") double longitude
     ) {
-        return getWeatherUseCase.handle(new WeatherQuery(locationName, latitude, longitude));
+        return getWeatherUseCase.handle(new WeatherQuery("Baku", latitude, longitude));
     }
 
-    @GetMapping("/health-telemetry")
+    @PostMapping("/smart-eta")
+    public SmartEtaResult calculateSmartEta(@RequestBody List<RoadSegment> segments) {
+        List<UUID> segmentIds = segments.stream().map(RoadSegment::id).toList();
+        return calculateSmartEtaUseCase.handle(segmentIds);
+    }
+
+    @GetMapping("/telemetry/status")
     public TelemetryStatusResponse getHealthTelemetry() {
         long freeMem = Runtime.getRuntime().freeMemory() / (1024 * 1024);
         long maxMem = Runtime.getRuntime().maxMemory() / (1024 * 1024);
@@ -137,7 +129,6 @@ public class TrafficController {
         );
     }
 
-    // рџЊђ BACKEND MAP CONFIGURATION API
     @GetMapping("/map-config")
     public MapConfigResponse getMapConfig() {
         return new MapConfigResponse(
@@ -150,14 +141,12 @@ public class TrafficController {
         );
     }
 
-    // рџ”Ќ BACKEND GEOCODING PROXY API (Google Maps / OSM Gateway)
     @GetMapping("/search")
     public ResponseEntity<String> searchGeocoding(@RequestParam String q) {
-        String resultJson = TomTomMapsGateway.geocodeSearch(q);
+        String resultJson = tomTomMapsGateway.geocodeSearch(q);
         return ResponseEntity.ok().header("Content-Type", "application/json").body(resultJson);
     }
 
-    // рџљ— BACKEND ROUTING PROXY API (Google Maps Directions / OSRM Gateway)
     @GetMapping("/route")
     public ResponseEntity<String> getBackendRoute(
             @RequestParam double fromLat,
@@ -166,8 +155,49 @@ public class TrafficController {
             @RequestParam double toLng,
             @RequestParam(defaultValue = "fastest") String mode
     ) {
-        String resultJson = TomTomMapsGateway.calculateDirections(fromLat, fromLng, toLat, toLng, mode);
+        String resultJson = tomTomMapsGateway.calculateDirections(fromLat, fromLng, toLat, toLng, mode);
         return ResponseEntity.ok().header("Content-Type", "application/json").body(resultJson);
+    }
+
+    @GetMapping(value = "/map/tiles/basic/{z}/{x}/{y}.png", produces = "image/png")
+    public ResponseEntity<byte[]> getBasicTile(@PathVariable int z, @PathVariable int x, @PathVariable int y) {
+        byte[] tileBytes = tomTomMapsGateway.proxyBasicTile(z, x, y);
+        return ResponseEntity.ok().header("Content-Type", "image/png").body(tileBytes);
+    }
+
+    @GetMapping(value = "/traffic/tiles/flow/{z}/{x}/{y}.png", produces = "image/png")
+    public ResponseEntity<byte[]> getTrafficFlowTile(@PathVariable int z, @PathVariable int x, @PathVariable int y) {
+        byte[] tileBytes = tomTomMapsGateway.proxyTrafficFlowTile(z, x, y);
+        return ResponseEntity.ok().header("Content-Type", "image/png").body(tileBytes);
+    }
+
+    @GetMapping(value = "/traffic/tiles/incidents/{z}/{x}/{y}.png", produces = "image/png")
+    public ResponseEntity<byte[]> getTrafficIncidentTile(@PathVariable int z, @PathVariable int x, @PathVariable int y) {
+        byte[] tileBytes = tomTomMapsGateway.proxyTrafficIncidentTile(z, x, y);
+        return ResponseEntity.ok().header("Content-Type", "image/png").body(tileBytes);
+    }
+
+    @GetMapping("/traffic/incidents/realtime")
+    public ResponseEntity<String> getRealTimeTomTomIncidents(
+            @RequestParam(defaultValue = "49.7") double minLng,
+            @RequestParam(defaultValue = "40.3") double minLat,
+            @RequestParam(defaultValue = "50.1") double maxLng,
+            @RequestParam(defaultValue = "40.5") double maxLat
+    ) {
+        String incidentsJson = tomTomMapsGateway.fetchRealIncidents(minLng, minLat, maxLng, maxLat);
+        return ResponseEntity.ok().header("Content-Type", "application/json").body(incidentsJson);
+    }
+
+    @PostMapping("/report")
+    public ResponseEntity<UserReport> submitReport(@Valid @RequestBody SubmitReportRequest request) {
+        UserReport report = submitReportUseCase.handle(new SubmitReportCommand(
+                request.userId(),
+                request.segmentId(),
+                request.type(),
+                request.description(),
+                request.createdAt()
+        ));
+        return ResponseEntity.status(HttpStatus.CREATED).body(report);
     }
 
     public record MapConfigResponse(
@@ -187,18 +217,6 @@ public class TrafficController {
             String jvmMemoryUsage,
             String timezone
     ) {}
-
-    @PostMapping("/report")
-    public ResponseEntity<UserReport> submitReport(@Valid @RequestBody SubmitReportRequest request) {
-        UserReport report = submitReportUseCase.handle(new SubmitReportCommand(
-                request.userId(),
-                request.segmentId(),
-                request.type(),
-                request.description(),
-                request.createdAt()
-        ));
-        return ResponseEntity.status(HttpStatus.CREATED).body(report);
-    }
 
     public record GpsPingRequest(
             @NotBlank String deviceId,

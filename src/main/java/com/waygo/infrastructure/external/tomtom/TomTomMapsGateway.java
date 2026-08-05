@@ -1,8 +1,6 @@
 package com.waygo.infrastructure.external.tomtom;
 
 import com.waygo.domain.model.*;
-
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -14,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class TomTomMapsGateway {
 
-    @Value("${google.maps.api-key:}")
+    @Value("${tomtom.api-key:}")
     private String apiKey;
 
     private final RestTemplate restTemplate;
@@ -26,50 +24,72 @@ public class TomTomMapsGateway {
     }
 
     public String geocodeSearch(String query) {
-        if (apiKey == null || apiKey.isBlank()) {
-            return fallbackSearch(query);
-        }
         try {
-            String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
-                    URLEncoder.encode(query + " Baku Azerbaijan", StandardCharsets.UTF_8) +
-                    "&key=" + apiKey;
+            String url = "https://api.tomtom.com/search/2/geocode/" +
+                    URLEncoder.encode(query, StandardCharsets.UTF_8) + ".json?key=" + getActiveApiKey() +
+                    "&lat=40.4093&lon=49.8671&radius=50000&countrySet=AZ&limit=5";
             return restTemplate.getForObject(url, String.class);
         } catch (Exception ex) {
-            return fallbackSearch(query);
+            return "{\"results\": []}";
         }
     }
 
     public String calculateDirections(double fromLat, double fromLng, double toLat, double toLng, String mode) {
-        if (apiKey == null || apiKey.isBlank()) {
-            return fallbackRoute(fromLat, fromLng, toLat, toLng);
-        }
         try {
-            String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" +
-                    fromLat + "," + fromLng + "&destination=" + toLat + "," + toLng +
-                    "&mode=driving&traffic_model=best_guess&departure_time=now&key=" + apiKey;
+            String routeType = "shortest".equalsIgnoreCase(mode) ? "shortest" : "fastest";
+            String url = "https://api.tomtom.com/routing/1/calculateRoute/" +
+                    fromLat + "," + fromLng + ":" + toLat + "," + toLng +
+                    "/json?key=" + getActiveApiKey() + "&routeType=" + routeType +
+                    "&maxAlternatives=2&routeRepresentation=polyline&computeTravelTimeFor=all";
             return restTemplate.getForObject(url, String.class);
         } catch (Exception ex) {
-            return fallbackRoute(fromLat, fromLng, toLat, toLng);
+            return "{\"routes\": []}";
         }
     }
 
-    private String fallbackSearch(String query) {
+    public String fetchRealIncidents(double minLng, double minLat, double maxLng, double maxLat) {
         try {
-            String url = "https://nominatim.openstreetmap.org/search?format=json&q=" +
-                    URLEncoder.encode(query + " Baku Azerbaijan", StandardCharsets.UTF_8) + "&limit=5";
+            String url = "https://api.tomtom.com/traffic/services/5/incidentDetails?key=" + getActiveApiKey() +
+                    "&bbox=" + minLng + "," + minLat + "," + maxLng + "," + maxLat +
+                    "&fields={incidents{type,geometry{type,coordinates},properties{iconCategory,magnitudeOfDelay,events{description,code}}}}" +
+                    "&language=az-AZ";
             return restTemplate.getForObject(url, String.class);
         } catch (Exception ex) {
-            return "[]";
+            return "{\"incidents\": []}";
         }
     }
 
-    private String fallbackRoute(double fromLat, double fromLng, double toLat, double toLng) {
+    public byte[] proxyBasicTile(int z, int x, int y) {
         try {
-            String url = "https://router.project-osrm.org/route/v1/driving/" +
-                    fromLng + "," + fromLat + ";" + toLng + "," + toLat + "?overview=full&geometries=geojson";
-            return restTemplate.getForObject(url, String.class);
+            String url = "https://api.tomtom.com/map/1/tile/basic/main/" + z + "/" + x + "/" + y + ".png?key=" + getActiveApiKey();
+            return restTemplate.getForObject(url, byte[].class);
         } catch (Exception ex) {
-            return "{}";
+            return new byte[0];
         }
+    }
+
+    public byte[] proxyTrafficFlowTile(int z, int x, int y) {
+        try {
+            String url = "https://api.tomtom.com/traffic/map/4/tile/flow/relative0/" + z + "/" + x + "/" + y + ".png?key=" + getActiveApiKey();
+            return restTemplate.getForObject(url, byte[].class);
+        } catch (Exception ex) {
+            return new byte[0];
+        }
+    }
+
+    public byte[] proxyTrafficIncidentTile(int z, int x, int y) {
+        try {
+            String url = "https://api.tomtom.com/traffic/map/4/tile/incidents/s3/" + z + "/" + x + "/" + y + ".png?key=" + getActiveApiKey();
+            return restTemplate.getForObject(url, byte[].class);
+        } catch (Exception ex) {
+            return new byte[0];
+        }
+    }
+
+    private String getActiveApiKey() {
+        if (apiKey != null && !apiKey.isBlank()) {
+            return apiKey;
+        }
+        return System.getenv().getOrDefault("TOMTOM_API_KEY", "");
     }
 }
