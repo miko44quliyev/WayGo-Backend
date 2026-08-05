@@ -1,11 +1,13 @@
-package waygo.application.service;
+package com.waygo.application.service;
 
-import waygo.domain.model.AnomalyStatus;
-import waygo.domain.model.ReportType;
-import waygo.domain.model.TrafficAnomaly;
-import waygo.domain.model.UserReport;
-import waygo.infrastructure.persistence.InMemoryTrafficAnomalyRepository;
-import waygo.infrastructure.persistence.InMemoryUserReportRepository;
+import com.waygo.domain.model.*;
+
+import com.waygo.domain.model.AnomalyStatus;
+import com.waygo.domain.model.ReportType;
+import com.waygo.domain.model.TrafficAnomaly;
+import com.waygo.domain.model.UserReport;
+import com.waygo.infrastructure.persistence.repository.InMemoryTrafficAnomalyRepository;
+import com.waygo.infrastructure.persistence.repository.InMemoryUserReportRepository;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;

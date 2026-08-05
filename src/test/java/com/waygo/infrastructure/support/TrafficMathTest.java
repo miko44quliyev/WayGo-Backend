@@ -1,4 +1,6 @@
-package waygo.infrastructure.support;
+package com.waygo.infrastructure.support;
+
+import com.waygo.domain.model.*;
 
 import org.junit.jupiter.api.Test;
 

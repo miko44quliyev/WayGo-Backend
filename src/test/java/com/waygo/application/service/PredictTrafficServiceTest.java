@@ -1,15 +1,17 @@
-package waygo.application.service;
+package com.waygo.application.service;
 
-import waygo.application.port.in.PredictTrafficQuery;
-import waygo.application.port.out.TrafficPredictionEngine;
-import waygo.domain.model.Coordinate;
-import waygo.domain.model.HistoricalPattern;
-import waygo.domain.model.RoadSegment;
-import waygo.domain.model.TrafficForecast;
-import waygo.domain.model.TrafficSnapshot;
-import waygo.infrastructure.persistence.InMemoryHistoricalPatternRepository;
-import waygo.infrastructure.persistence.InMemoryRoadSegmentRepository;
-import waygo.infrastructure.persistence.InMemoryTrafficSnapshotRepository;
+import com.waygo.domain.model.*;
+
+import com.waygo.application.port.in.PredictTrafficQuery;
+import com.waygo.application.port.out.TrafficPredictionEngine;
+import com.waygo.domain.model.Coordinate;
+import com.waygo.domain.model.HistoricalPattern;
+import com.waygo.domain.model.RoadSegment;
+import com.waygo.domain.model.TrafficForecast;
+import com.waygo.domain.model.TrafficSnapshot;
+import com.waygo.infrastructure.persistence.repository.InMemoryHistoricalPatternRepository;
+import com.waygo.infrastructure.persistence.repository.InMemoryRoadSegmentRepository;
+import com.waygo.infrastructure.persistence.repository.InMemoryTrafficSnapshotRepository;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;

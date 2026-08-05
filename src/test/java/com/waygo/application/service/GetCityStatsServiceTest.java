@@ -1,9 +1,11 @@
-package waygo.application.service;
+package com.waygo.application.service;
 
-import waygo.infrastructure.persistence.InMemoryGpsPingRepository;
-import waygo.infrastructure.persistence.InMemoryTrafficSnapshotRepository;
-import waygo.domain.model.GpsPing;
-import waygo.domain.model.TrafficSnapshot;
+import com.waygo.domain.model.*;
+
+import com.waygo.infrastructure.persistence.repository.InMemoryGpsPingRepository;
+import com.waygo.infrastructure.persistence.repository.InMemoryTrafficSnapshotRepository;
+import com.waygo.domain.model.GpsPing;
+import com.waygo.domain.model.TrafficSnapshot;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -18,7 +20,7 @@ class GetCityStatsServiceTest {
     void handleShouldAggregateRecentSnapshotsAndGpsPings() {
         InMemoryTrafficSnapshotRepository snapshots = new InMemoryTrafficSnapshotRepository();
         InMemoryGpsPingRepository gpsPings = new InMemoryGpsPingRepository();
-        Instant now = Instant.parse("2026-08-05T00:00:00Z");
+        Instant now = Instant.now();
 
         snapshots.save(new TrafficSnapshot(UUID.randomUUID(), now.minusSeconds(3600), 20.0, 20));
         snapshots.save(new TrafficSnapshot(UUID.randomUUID(), now.minusSeconds(7200), 30.0, 30));

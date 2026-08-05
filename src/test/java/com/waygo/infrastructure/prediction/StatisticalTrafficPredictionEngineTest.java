@@ -1,10 +1,12 @@
-package waygo.infrastructure.prediction;
+package com.waygo.infrastructure.prediction;
 
-import waygo.domain.model.Coordinate;
-import waygo.domain.model.HistoricalPattern;
-import waygo.domain.model.RoadSegment;
-import waygo.domain.model.TrafficForecast;
-import waygo.domain.model.TrafficSnapshot;
+import com.waygo.domain.model.*;
+
+import com.waygo.domain.model.Coordinate;
+import com.waygo.domain.model.HistoricalPattern;
+import com.waygo.domain.model.RoadSegment;
+import com.waygo.domain.model.TrafficForecast;
+import com.waygo.domain.model.TrafficSnapshot;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;

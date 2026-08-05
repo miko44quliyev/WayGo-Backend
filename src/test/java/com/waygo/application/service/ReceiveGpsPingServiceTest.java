@@ -1,15 +1,17 @@
-package waygo.application.service;
+package com.waygo.application.service;
 
-import waygo.application.port.out.IncidentRealtimePublisher;
-import waygo.application.port.in.ReceiveGpsPingCommand;
-import waygo.domain.model.Coordinate;
-import waygo.domain.model.HistoricalPattern;
-import waygo.domain.model.RoadSegment;
-import waygo.infrastructure.persistence.InMemoryGpsPingRepository;
-import waygo.infrastructure.persistence.InMemoryHistoricalPatternRepository;
-import waygo.infrastructure.persistence.InMemoryRoadSegmentRepository;
-import waygo.infrastructure.persistence.InMemoryTrafficAnomalyRepository;
-import waygo.infrastructure.persistence.InMemoryTrafficSnapshotRepository;
+import com.waygo.domain.model.*;
+
+import com.waygo.application.port.out.IncidentRealtimePublisher;
+import com.waygo.application.port.in.ReceiveGpsPingCommand;
+import com.waygo.domain.model.Coordinate;
+import com.waygo.domain.model.HistoricalPattern;
+import com.waygo.domain.model.RoadSegment;
+import com.waygo.infrastructure.persistence.repository.InMemoryGpsPingRepository;
+import com.waygo.infrastructure.persistence.repository.InMemoryHistoricalPatternRepository;
+import com.waygo.infrastructure.persistence.repository.InMemoryRoadSegmentRepository;
+import com.waygo.infrastructure.persistence.repository.InMemoryTrafficAnomalyRepository;
+import com.waygo.infrastructure.persistence.repository.InMemoryTrafficSnapshotRepository;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;

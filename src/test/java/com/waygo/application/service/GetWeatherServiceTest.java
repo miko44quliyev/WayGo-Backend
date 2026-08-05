@@ -1,8 +1,10 @@
-package waygo.application.service;
+package com.waygo.application.service;
 
-import waygo.application.port.in.WeatherQuery;
-import waygo.application.port.out.WeatherGateway;
-import waygo.domain.model.WeatherSnapshot;
+import com.waygo.domain.model.*;
+
+import com.waygo.application.port.in.WeatherQuery;
+import com.waygo.application.port.out.WeatherGateway;
+import com.waygo.domain.model.WeatherSnapshot;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestClientException;
 
