@@ -1,4 +1,6 @@
-﻿package com.waygo.infrastructure.support;
+package com.waygo.infrastructure.support;
+
+import com.waygo.domain.model.*;
 
 public final class TrafficMath {
 

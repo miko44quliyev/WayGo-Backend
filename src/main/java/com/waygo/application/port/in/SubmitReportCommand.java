@@ -1,6 +1,8 @@
-﻿package com.waygo.application.port.in;
+package com.waygo.application.port.in;
 
-import com.waygo.domain.traffic.ReportType;
+import com.waygo.domain.model.*;
+
+
 
 import java.time.Instant;
 import java.util.UUID;

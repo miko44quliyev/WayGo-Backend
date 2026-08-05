@@ -1,6 +1,8 @@
-﻿package com.waygo.application.port.out;
+package com.waygo.application.port.out;
 
-import com.waygo.domain.traffic.TrafficAnomaly;
+import com.waygo.domain.model.*;
+
+
 
 import java.util.List;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-﻿package com.waygo.domain.analytics;
+package com.waygo.domain.model;
 
 import java.time.Instant;
 

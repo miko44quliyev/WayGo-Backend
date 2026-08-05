@@ -1,8 +1,10 @@
-﻿package com.waygo.application.service;
+package com.waygo.application.service;
+
+import com.waygo.domain.model.*;
 
 import com.waygo.application.port.in.GetAnomaliesUseCase;
 import com.waygo.application.port.out.TrafficAnomalyRepository;
-import com.waygo.domain.traffic.TrafficAnomaly;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;

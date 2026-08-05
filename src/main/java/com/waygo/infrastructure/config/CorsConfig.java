@@ -1,4 +1,6 @@
-﻿package com.waygo.infrastructure.config;
+package com.waygo.infrastructure.config;
+
+import com.waygo.domain.model.*;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

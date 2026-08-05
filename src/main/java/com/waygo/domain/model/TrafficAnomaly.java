@@ -1,4 +1,4 @@
-﻿package com.waygo.domain.traffic;
+package com.waygo.domain.model;
 
 import java.time.Instant;
 import java.util.Objects;

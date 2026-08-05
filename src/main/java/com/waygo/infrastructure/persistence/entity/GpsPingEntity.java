@@ -1,4 +1,6 @@
-﻿package com.waygo.infrastructure.persistence.entity;
+package com.waygo.infrastructure.persistence.entity;
+
+import com.waygo.domain.model.*;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

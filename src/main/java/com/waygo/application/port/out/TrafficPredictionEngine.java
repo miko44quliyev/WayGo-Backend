@@ -1,9 +1,11 @@
-﻿package com.waygo.application.port.out;
+package com.waygo.application.port.out;
 
-import com.waygo.domain.traffic.HistoricalPattern;
-import com.waygo.domain.traffic.RoadSegment;
-import com.waygo.domain.traffic.TrafficForecast;
-import com.waygo.domain.traffic.TrafficSnapshot;
+import com.waygo.domain.model.*;
+
+
+
+
+
 
 import java.time.DayOfWeek;
 import java.util.Optional;

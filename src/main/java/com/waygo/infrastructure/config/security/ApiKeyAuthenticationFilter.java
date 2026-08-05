@@ -1,4 +1,6 @@
-﻿package com.waygo.infrastructure.config.security;
+package com.waygo.infrastructure.config.security;
+
+import com.waygo.domain.model.*;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

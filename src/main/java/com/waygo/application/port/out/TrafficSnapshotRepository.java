@@ -1,6 +1,8 @@
-﻿package com.waygo.application.port.out;
+package com.waygo.application.port.out;
 
-import com.waygo.domain.traffic.TrafficSnapshot;
+import com.waygo.domain.model.*;
+
+
 
 import java.util.Collection;
 import java.util.List;

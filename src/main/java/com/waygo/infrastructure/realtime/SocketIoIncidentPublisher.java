@@ -1,9 +1,11 @@
-﻿package com.waygo.infrastructure.realtime;
+package com.waygo.infrastructure.realtime;
+
+import com.waygo.domain.model.*;
 
 import com.corundumstudio.socketio.SocketIOServer;
 import com.waygo.application.port.out.IncidentRealtimePublisher;
-import com.waygo.domain.traffic.IncidentEvent;
-import com.waygo.domain.traffic.RoadIncident;
+
+
 import org.springframework.stereotype.Component;
 
 @Component

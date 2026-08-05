@@ -1,4 +1,6 @@
-﻿package com.waygo.infrastructure.realtime;
+package com.waygo.infrastructure.realtime;
+
+import com.waygo.domain.model.*;
 
 import com.corundumstudio.socketio.SocketIOServer;
 import org.springframework.beans.factory.annotation.Value;

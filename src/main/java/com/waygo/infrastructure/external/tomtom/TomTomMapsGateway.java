@@ -1,4 +1,6 @@
-﻿package com.waygo.infrastructure.external.tomtom;
+package com.waygo.infrastructure.external.tomtom;
+
+import com.waygo.domain.model.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

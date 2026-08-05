@@ -1,15 +1,17 @@
-﻿package com.waygo.infrastructure.seed;
+package com.waygo.infrastructure.seed;
+
+import com.waygo.domain.model.*;
 
 import com.waygo.application.port.out.HistoricalPatternRepository;
 import com.waygo.application.port.out.RoadSegmentRepository;
 import com.waygo.application.port.out.TrafficAnomalyRepository;
 import com.waygo.application.port.out.TrafficSnapshotRepository;
-import com.waygo.domain.traffic.AnomalyStatus;
-import com.waygo.domain.traffic.Coordinate;
-import com.waygo.domain.traffic.HistoricalPattern;
-import com.waygo.domain.traffic.RoadSegment;
-import com.waygo.domain.traffic.TrafficAnomaly;
-import com.waygo.domain.traffic.TrafficSnapshot;
+
+
+
+
+
+
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 

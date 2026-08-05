@@ -1,7 +1,9 @@
-﻿package com.waygo.api;
+package com.waygo.api;
+
+import com.waygo.domain.model.*;
 
 import com.waygo.application.port.in.*;
-import com.waygo.domain.traffic.*; import com.waygo.domain.incident.*; import com.waygo.domain.weather.*; import com.waygo.domain.analytics.*;
+   
 import com.waygo.infrastructure.external.tomtom.TomTomMapsGateway;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

@@ -1,7 +1,9 @@
-﻿package com.waygo.infrastructure.persistence.repository;
+package com.waygo.infrastructure.persistence.repository;
+
+import com.waygo.domain.model.*;
 
 import com.waygo.application.port.out.UserReportRepository;
-import com.waygo.domain.traffic.UserReport;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

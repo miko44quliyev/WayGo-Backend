@@ -1,4 +1,4 @@
-﻿package com.waygo.domain.traffic;
+package com.waygo.domain.model;
 
 import java.time.DayOfWeek;
 import java.util.Objects;

@@ -1,9 +1,11 @@
-﻿package com.waygo.application.service;
+package com.waygo.application.service;
+
+import com.waygo.domain.model.*;
 
 import com.waygo.application.port.in.GetWeatherUseCase;
 import com.waygo.application.port.in.WeatherQuery;
 import com.waygo.application.port.out.WeatherGateway;
-import com.waygo.domain.traffic.WeatherSnapshot;
+
 import org.springframework.stereotype.Service;
 
 import org.springframework.web.client.RestClientException;

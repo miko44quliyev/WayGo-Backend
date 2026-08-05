@@ -1,4 +1,6 @@
-﻿package com.waygo.infrastructure.config;
+package com.waygo.infrastructure.config;
+
+import com.waygo.domain.model.*;
 
 import com.waygo.infrastructure.security.ApiKeyAuthenticationFilter;
 import org.springframework.context.annotation.Bean;

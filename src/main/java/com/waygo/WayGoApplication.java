@@ -1,4 +1,6 @@
-﻿package com.waygo;
+package com.waygo;
+
+import com.waygo.domain.model.*;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

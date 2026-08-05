@@ -1,4 +1,6 @@
-﻿package com.waygo.application.service;
+package com.waygo.application.service;
+
+import com.waygo.domain.model.*;
 
 import com.waygo.application.port.in.GpsPingReceipt;
 import com.waygo.application.port.in.ReceiveGpsPingCommand;
@@ -9,13 +11,13 @@ import com.waygo.application.port.out.HistoricalPatternRepository;
 import com.waygo.application.port.out.RoadSegmentRepository;
 import com.waygo.application.port.out.TrafficAnomalyRepository;
 import com.waygo.application.port.out.TrafficSnapshotRepository;
-import com.waygo.domain.traffic.AnomalyStatus;
-import com.waygo.domain.traffic.GpsPing;
-import com.waygo.domain.traffic.HistoricalPattern;
-import com.waygo.domain.traffic.RoadIncident;
-import com.waygo.domain.traffic.RoadSegment;
-import com.waygo.domain.traffic.TrafficAnomaly;
-import com.waygo.domain.traffic.TrafficSnapshot;
+
+
+
+
+
+
+
 import com.waygo.infrastructure.support.TrafficMath;
 import org.springframework.stereotype.Service;
 

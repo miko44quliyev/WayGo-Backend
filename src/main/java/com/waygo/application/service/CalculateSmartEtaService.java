@@ -1,15 +1,17 @@
-﻿package com.waygo.application.service;
+package com.waygo.application.service;
+
+import com.waygo.domain.model.*;
 
 import com.waygo.application.port.in.CalculateSmartEtaUseCase;
 import com.waygo.application.port.out.HistoricalPatternRepository;
 import com.waygo.application.port.out.RoadSegmentRepository;
 import com.waygo.application.port.out.TrafficPredictionEngine;
 import com.waygo.application.port.out.TrafficSnapshotRepository;
-import com.waygo.domain.traffic.EtaWindow;
-import com.waygo.domain.traffic.RoadSegment;
-import com.waygo.domain.traffic.SmartEtaResult;
-import com.waygo.domain.traffic.TrafficForecast;
-import com.waygo.domain.traffic.TrafficSnapshot;
+
+
+
+
+
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;

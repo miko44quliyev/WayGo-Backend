@@ -1,9 +1,11 @@
-﻿package com.waygo.infrastructure.external.weather;
+package com.waygo.infrastructure.external.weather;
+
+import com.waygo.domain.model.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.waygo.application.port.out.WeatherGateway;
-import com.waygo.domain.traffic.WeatherSnapshot;
+
 import com.waygo.infrastructure.support.TrafficMath;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;

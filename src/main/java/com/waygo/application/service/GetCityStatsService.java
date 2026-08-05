@@ -1,11 +1,13 @@
-﻿package com.waygo.application.service;
+package com.waygo.application.service;
+
+import com.waygo.domain.model.*;
 
 import com.waygo.application.port.in.GetCityStatsUseCase;
 import com.waygo.application.port.out.GpsPingRepository;
 import com.waygo.application.port.out.TrafficSnapshotRepository;
-import com.waygo.domain.traffic.CityHistoryPoint;
-import com.waygo.domain.traffic.CityStats;
-import com.waygo.domain.traffic.TrafficSnapshot;
+
+
+
 import com.waygo.infrastructure.support.TrafficMath;
 import org.springframework.stereotype.Service;
 

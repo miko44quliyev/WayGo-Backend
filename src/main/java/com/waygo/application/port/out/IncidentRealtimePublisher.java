@@ -1,6 +1,8 @@
-﻿package com.waygo.application.port.out;
+package com.waygo.application.port.out;
 
-import com.waygo.domain.traffic.RoadIncident;
+import com.waygo.domain.model.*;
+
+
 
 public interface IncidentRealtimePublisher {
 

@@ -1,4 +1,4 @@
-﻿package com.waygo.domain.incident;
+package com.waygo.domain.model;
 
 import java.util.UUID;
 

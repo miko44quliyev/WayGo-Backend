@@ -1,4 +1,4 @@
-﻿package com.waygo.domain.weather;
+package com.waygo.domain.model;
 
 public record WeatherSnapshot(
         String locationName,

@@ -1,4 +1,6 @@
-﻿package com.waygo.infrastructure.persistence.entity;
+package com.waygo.infrastructure.persistence.entity;
+
+import com.waygo.domain.model.*;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,7 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import com.waygo.domain.traffic.AnomalyStatus;
+
 import java.time.Instant;
 import java.util.UUID;
 

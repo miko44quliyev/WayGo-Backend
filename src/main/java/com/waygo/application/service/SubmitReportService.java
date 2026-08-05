@@ -1,15 +1,17 @@
-﻿package com.waygo.application.service;
+package com.waygo.application.service;
+
+import com.waygo.domain.model.*;
 
 import com.waygo.application.port.in.SubmitReportCommand;
 import com.waygo.application.port.in.SubmitReportUseCase;
 import com.waygo.application.port.out.IncidentRealtimePublisher;
 import com.waygo.application.port.out.TrafficAnomalyRepository;
 import com.waygo.application.port.out.UserReportRepository;
-import com.waygo.domain.traffic.AnomalyStatus;
-import com.waygo.domain.traffic.ReportType;
-import com.waygo.domain.traffic.RoadIncident;
-import com.waygo.domain.traffic.TrafficAnomaly;
-import com.waygo.domain.traffic.UserReport;
+
+
+
+
+
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;

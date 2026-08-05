@@ -1,6 +1,8 @@
-﻿package com.waygo.application.port.in;
+package com.waygo.application.port.in;
 
-import com.waygo.domain.traffic.TrafficMapView;
+import com.waygo.domain.model.*;
+
+
 
 public interface GetTrafficMapUseCase {
 
