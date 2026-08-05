@@ -1,6 +1,6 @@
-package org.example.waygo.infrastructure.config;
+﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.infrastructure.config;
 
-import org.example.waygo.infrastructure.security.ApiKeyAuthenticationFilter;
+import com.waygo.infrastructure.security.ApiKeyAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

@@ -1,0 +1,10 @@
+﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.application.port.in;
+
+import com.waygo.domain.traffic.RoadIncident;
+
+import java.util.List;
+
+public interface GetIncidentsUseCase {
+
+    List<RoadIncident> handle();
+}

@@ -1,4 +1,4 @@
-package org.example.waygo.infrastructure.security;
+﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.infrastructure.config.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

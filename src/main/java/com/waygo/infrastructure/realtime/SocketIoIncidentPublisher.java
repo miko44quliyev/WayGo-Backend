@@ -1,0 +1,22 @@
+﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.infrastructure.realtime;
+
+import com.corundumstudio.socketio.SocketIOServer;
+import com.waygo.application.port.out.IncidentRealtimePublisher;
+import com.waygo.domain.traffic.IncidentEvent;
+import com.waygo.domain.traffic.RoadIncident;
+import org.springframework.stereotype.Component;
+
+@Component
+public class SocketIoIncidentPublisher implements IncidentRealtimePublisher {
+
+    private final SocketIOServer socketIOServer;
+
+    public SocketIoIncidentPublisher(SocketIOServer socketIOServer) {
+        this.socketIOServer = socketIOServer;
+    }
+
+    @Override
+    public void publishCreated(RoadIncident incident) {
+        socketIOServer.getBroadcastOperations().sendEvent("incident:created", IncidentEvent.from(incident));
+    }
+}

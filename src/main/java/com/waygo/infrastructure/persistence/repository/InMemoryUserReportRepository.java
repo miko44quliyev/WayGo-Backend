@@ -1,0 +1,25 @@
+﻿package C:.Users.mikoq.Downloads.waygo.WayGo-Backend.src.main.java.com.waygo.infrastructure.persistence.repository;
+
+import com.waygo.application.port.out.UserReportRepository;
+import com.waygo.domain.traffic.UserReport;
+import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+@Repository
+public class InMemoryUserReportRepository implements UserReportRepository {
+
+    private final CopyOnWriteArrayList<UserReport> storage = new CopyOnWriteArrayList<>();
+
+    @Override
+    public void save(UserReport report) {
+        storage.add(report);
+    }
+
+    @Override
+    public List<UserReport> findAll() {
+        return new ArrayList<>(storage);
+    }
+}
