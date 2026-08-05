@@ -152,6 +152,48 @@ public class TrafficController {
         );
     }
 
+    // 🌐 BACKEND MAP CONFIGURATION API
+    @GetMapping("/map-config")
+    public MapConfigResponse getMapConfig() {
+        return new MapConfigResponse(
+                40.4093,
+                49.8671,
+                13,
+                "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                List.of("street", "satellite", "traffic")
+        );
+    }
+
+    // 🔍 BACKEND GEOCODING PROXY API (Google Maps / OSM Gateway)
+    @GetMapping("/search")
+    public ResponseEntity<String> searchGeocoding(@RequestParam String q) {
+        String resultJson = googleMapsGateway.geocodeSearch(q);
+        return ResponseEntity.ok().header("Content-Type", "application/json").body(resultJson);
+    }
+
+    // 🚗 BACKEND ROUTING PROXY API (Google Maps Directions / OSRM Gateway)
+    @GetMapping("/route")
+    public ResponseEntity<String> getBackendRoute(
+            @RequestParam double fromLat,
+            @RequestParam double fromLng,
+            @RequestParam double toLat,
+            @RequestParam double toLng,
+            @RequestParam(defaultValue = "fastest") String mode
+    ) {
+        String resultJson = googleMapsGateway.calculateDirections(fromLat, fromLng, toLat, toLng, mode);
+        return ResponseEntity.ok().header("Content-Type", "application/json").body(resultJson);
+    }
+
+    public record MapConfigResponse(
+            double centerLat,
+            double centerLng,
+            int defaultZoom,
+            String streetTileUrl,
+            String satelliteTileUrl,
+            List<String> availableLayers
+    ) {}
+
     public record TelemetryStatusResponse(
             String status,
             String engineVersion,
