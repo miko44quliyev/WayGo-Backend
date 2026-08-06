@@ -1,11 +1,11 @@
 package com.waygo.application.service;
 
-import com.waygo.domain.model.*;
 
-import com.waygo.infrastructure.persistence.repository.InMemoryGpsPingRepository;
-import com.waygo.infrastructure.persistence.repository.InMemoryTrafficSnapshotRepository;
-import com.waygo.domain.model.GpsPing;
-import com.waygo.domain.model.TrafficSnapshot;
+import com.waygo.traffic.application.service.GetCityStatsService;
+import com.waygo.traffic.domain.entity.GpsPing;
+import com.waygo.traffic.domain.entity.TrafficSnapshot;
+import com.waygo.traffic.infrastructure.adapter.outbound.persistence.InMemoryGpsPingRepository;
+import com.waygo.traffic.infrastructure.adapter.outbound.persistence.InMemoryTrafficSnapshotRepository;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
