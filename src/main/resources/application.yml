@@ -34,4 +34,4 @@ tomtom:
   api-key: ${TOMTOM_API_KEY:} # Buraya TomTom API açarınızı yazın
 
 gemini:
-  api-key: ${GEMINI_API_KEY:AIzaSyCbFQqYt5-9d7zA5uHHQTW31x3yhrxtrKo} # Gemini Flash 1.5 API Key
+  api-key: ${GEMINI_API_KEY:} # Gemini API Key (Set as Environment Variable)

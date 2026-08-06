@@ -18,7 +18,7 @@ public class GeminiAiGateway {
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
-    public GeminiAiGateway(@Value("${gemini.api-key:AIzaSyCbFQqYt5-9d7zA5uHHQTW31x3yhrxtrKo}") String apiKey, ObjectMapper objectMapper) {
+    public GeminiAiGateway(@Value("${gemini.api-key:}") String apiKey, ObjectMapper objectMapper) {
         this.apiKey = apiKey;
         this.objectMapper = objectMapper;
         this.httpClient = HttpClient.newBuilder()
