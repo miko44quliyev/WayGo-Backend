@@ -1,6 +1,7 @@
 package com.waygo.api;
 
 import com.waygo.application.port.in.*;
+import com.waygo.application.service.ChatbotService;
 import com.waygo.domain.model.*;
 import com.waygo.infrastructure.external.tomtom.TomTomMapsGateway;
 import jakarta.validation.Valid;
@@ -35,6 +36,7 @@ public class TrafficController {
     private final GetWeatherUseCase getWeatherUseCase;
     private final CalculateSmartEtaUseCase calculateSmartEtaUseCase;
     private final TomTomMapsGateway tomTomMapsGateway;
+    private final ChatbotService chatbotService;
 
     public TrafficController(
             ReceiveGpsPingUseCase receiveGpsPingUseCase,
@@ -46,7 +48,8 @@ public class TrafficController {
             GetCityStatsUseCase getCityStatsUseCase,
             GetWeatherUseCase getWeatherUseCase,
             CalculateSmartEtaUseCase calculateSmartEtaUseCase,
-            TomTomMapsGateway tomTomMapsGateway
+            TomTomMapsGateway tomTomMapsGateway,
+            ChatbotService chatbotService
     ) {
         this.receiveGpsPingUseCase = receiveGpsPingUseCase;
         this.getTrafficMapUseCase = getTrafficMapUseCase;
@@ -58,6 +61,7 @@ public class TrafficController {
         this.getWeatherUseCase = getWeatherUseCase;
         this.calculateSmartEtaUseCase = calculateSmartEtaUseCase;
         this.tomTomMapsGateway = tomTomMapsGateway;
+        this.chatbotService = chatbotService;
     }
 
     @PostMapping("/gps-ping")
@@ -202,30 +206,8 @@ public class TrafficController {
 
     @PostMapping("/chat")
     public ResponseEntity<ChatResponse> handleChat(@RequestBody ChatRequest request) {
-        String msg = (request != null && request.message() != null) ? request.message().trim().toLowerCase() : "";
-        String reply;
-
-        if (msg.contains("neftçilər") || msg.contains("neftciler")) {
-            reply = "🚗 [WayGo Backend Engine] Neftçilər prospekti: Hazırda orta sıxlıq qeydə alınır (48% tıxac). Sol zolaqda yol təmiri səbəbilə ~12 dəqiqə ləngimə gözlənilir.";
-        } else if (msg.contains("tıxac") || msg.contains("tixac") || msg.contains("indeks") || msg.contains("sıxlıq")) {
-            CityStats stats = getCityStatsUseCase.handle();
-            int pct = (stats != null) ? (int) Math.round(stats.congestionPercent()) : 46;
-            reply = String.format("🚦 [WayGo Backend Engine] Bakı Şəhər Tıxac İndeksi: Hazırda meqapolis üzrə sıxlıq %d%% təşkil edir. Ən kritik yüklənmə Yasamal və Nəsimi rayonlarındadır.", pct);
-        } else if (msg.contains("hava") || msg.contains("temperatur") || msg.contains("sinoptik")) {
-            WeatherSnapshot w = getWeatherUseCase.handle(new WeatherQuery("Baku", 40.4093, 49.8671));
-            double temp = (w != null) ? w.temperatureC() : 24.0;
-            String cond = (w != null) ? w.condition() : "Mülayim Xəzri";
-            reply = String.format("🌤️ [WayGo Backend Engine] Bakı Sinoptik Vəziyyəti: %s, %.1f°C.", cond, temp);
-        } else if (msg.contains("anomaliya") || msg.contains("z-score")) {
-            List<TrafficAnomaly> anomalies = getAnomaliesUseCase.handle();
-            int count = (anomalies != null) ? anomalies.size() : 3;
-            reply = String.format("📉 [WayGo Backend Engine] AI Anomaliya Radarı: Qeydə alınan anomaliyaların sayı: %d. Heydər Əliyev prospektində Z-Score düşümü: -2.84.", count);
-        } else if (msg.contains("marşrut") || msg.contains("marsrut") || msg.contains("sürət") || msg.contains("yol")) {
-            reply = "⚡ [WayGo Backend Engine] Smart ETA: Nərimanov - Mərkəz marşrutu üzrə ən sürətli gediş vaxtı 14 dəqiqədir (TomTom Routing v1).";
-        } else {
-            reply = "🤖 [WayGo Backend Engine] Bakı Smart Mobility sistemindən verilənlər təhlil olundu. Şəhər üzrə 342 nəqliyyat vasitəsi aktivdir, orta axın sürəti 40 km/s təşkil edir. Başqa hansı yol və ya rayon barədə məlumat öyrənmək istəyirsiniz?";
-        }
-
+        String msg = (request != null) ? request.message() : "";
+        String reply = chatbotService.processUserQuery(msg);
         return ResponseEntity.ok(new ChatResponse(reply));
     }
 
