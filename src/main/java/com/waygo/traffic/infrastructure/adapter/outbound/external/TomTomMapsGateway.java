@@ -24,21 +24,13 @@ public class TomTomMapsGateway {
 
     public String geocodeSearch(String query) {
         try {
-            // Switched to Nominatim OpenStreetMap for better Azerbaijan coverage (No API key required)
-            String url = "https://nominatim.openstreetmap.org/search?q=" +
-                    URLEncoder.encode(query, StandardCharsets.UTF_8) +
-                    "&format=json&countrycodes=az&limit=5&addressdetails=1";
-            
-            // Nominatim requires a User-Agent header, so we use exchange()
-            org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
-            headers.set("User-Agent", "WayGo-Smart-Mobility/1.0");
-            org.springframework.http.HttpEntity<String> entity = new org.springframework.http.HttpEntity<>(headers);
-            
-            org.springframework.http.ResponseEntity<String> response = restTemplate.exchange(
-                    url, org.springframework.http.HttpMethod.GET, entity, String.class);
-            return response.getBody();
+            // Switched to TomTom Fuzzy Search to support both Addresses and POIs (Malls, Parks, etc.)
+            String url = "https://api.tomtom.com/search/2/search/" +
+                    URLEncoder.encode(query, StandardCharsets.UTF_8) + ".json?key=" + getActiveApiKey() +
+                    "&lat=40.4093&lon=49.8671&radius=50000&countrySet=AZ&limit=10";
+            return restTemplate.getForObject(url, String.class);
         } catch (Exception ex) {
-            return "[]";
+            return "{\"results\": []}";
         }
     }
 
