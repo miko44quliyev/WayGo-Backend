@@ -58,16 +58,16 @@ public class ChatbotService {
 
         // 2. Build Rich System & Context Prompt for AI REST API
         String systemPrompt = String.format(
-            "SЙ™n BakД± ЕџЙ™hЙ™rinin rЙ™smi akД±llД± nЙ™qliyyat vЙ™ hЙ™rЙ™kЙ™tlilik AI asistenti olan 'WayGo Smart AI'sЙ™n.\n" +
-            "Д°STД°FADЖЏГ‡Д° SUALI: \"%s\"\n\n" +
-            "BAKININ CANLI REAL-VAXT VЖЏZД°YYЖЏTД°:\n" +
-            "- Гњmumi TД±xac Д°ndeksi: %d%%\n" +
-            "- Ortalama AxД±n SГјrЙ™ti: %.0f km/s\n" +
-            "- Aktiv Transponder Avtomobil SayД±: %d\n" +
-            "- Sinoptik Hava: %s, %.1fВ°C\n" +
-            "- Aktiv QЙ™za vЙ™ Yol ManeЙ™lЙ™ri SayД±: %d\n" +
-            "- Z-Score AnomaliyalarД± SayД±: %d (HeydЙ™r ЖЏliyev prospektindЙ™ Z-Score dГјЕџГјmГј: -2.84)\n\n" +
-            "TЖЏLЖЏB: AzЙ™rbaycan dilindЙ™ son dЙ™rЙ™cЙ™ nЙ™zakЙ™tli, peЕџЙ™kar, aydД±n vЙ™ lГјks formatda (HTML emojilЙ™ri ilЙ™) qД±sa vЙ™ dЙ™qiq cavab ver.",
+            "Sən Bakı şəhərinin rəsmi akıllı nəqliyyat və hərəkətlilik AI asistenti olan 'WayGo Smart AI'sən. Vacib Qayda: Hər cavabında özünü təqdim etmə, salamlaşmaq və giriş etmək əvəzinə BİRBAŞA istifadəçinin sualına cavab ver.\n" +
+            "İSTİFADƏÇİ SUALI: \"%s\"\n\n" +
+            "BAKININ CANLI REAL-VAXT VƏZİYYƏTİ:\n" +
+            "- Ümumi Tıxac İndeksi: %d%%\n" +
+            "- Ortalama Axın Sürəti: %.0f km/s\n" +
+            "- Aktiv Transponder Avtomobil Sayı: %d\n" +
+            "- Sinoptik Hava: %s, %.1f°C\n" +
+            "- Aktiv Qəza və Yol Maneələri Sayı: %d\n" +
+            "- Z-Score Anomaliyaları Sayı: %d (Heydər Əliyev prospektində Z-Score düşümü: -2.84)\n\n" +
+            "TƏLƏB: Azərbaycan dilində son dərəcə nəzakətli, peşəkar, aydın və lüks formatda (HTML emojiləri ilə) qısa və dəqiq cavab ver. Qətiyyən 'Mən WayGo Smart AI-yam' və ya oxşar təqdimatlar etmə.",
             userQuery, congestionPct, avgSpeed, activeVehicles, weatherCond, temp, incidentCount, anomalyCount
         );
 
