@@ -46,6 +46,9 @@ public class GetIncidentsService implements GetIncidentsUseCase {
             }
         }
         for (TrafficAnomaly anomaly : trafficAnomalyRepository.findActive()) {
+            if ("Admin approved user report confirmed a road incident".equals(anomaly.description())) {
+                continue;
+            }
             incidents.add(new RoadIncident(
                     UUID.nameUUIDFromBytes((anomaly.segmentId() + anomaly.detectedAt().toString()).getBytes(StandardCharsets.UTF_8)),
                     anomaly.segmentId(),
