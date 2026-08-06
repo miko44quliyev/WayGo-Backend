@@ -32,7 +32,7 @@ public class GeminiAiGateway {
         }
 
         try {
-            String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.0-flash:generateContent?key=" + apiKey;
+            String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + apiKey;
 
             // Escaping prompt JSON safely
             String escapedPrompt = promptWithContext
