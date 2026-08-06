@@ -48,7 +48,7 @@ public class GeminiAiGateway {
                   }],
                   "generationConfig": {
                     "temperature": 0.4,
-                    "maxOutputTokens": 300
+                    "maxOutputTokens": 4096
                   }
                 }
                 """.formatted(escapedPrompt);
