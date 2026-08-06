@@ -1,15 +1,11 @@
 package com.waygo.report.application.port.outbound;
 
 import com.waygo.report.domain.entity.UserReport;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
 
-
-
-import java.util.List;
-
-public interface UserReportRepository {
-
-    void save(UserReport report);
-
-    List<UserReport> findAll();
+@Repository
+public interface UserReportRepository extends JpaRepository<UserReport, UUID> {
 }

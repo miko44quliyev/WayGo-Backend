@@ -6,17 +6,14 @@ import com.waygo.traffic.domain.entity.TrafficAnomaly;
 import com.waygo.traffic.domain.entity.TrafficSnapshot;
 import com.waygo.traffic.domain.valueobject.AnomalyStatus;
 import com.waygo.traffic.domain.valueobject.Coordinate;
-
+import com.waygo.user.domain.entity.AppUser;
+import com.waygo.user.infrastructure.repository.AppUserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.waygo.traffic.application.port.outbound.HistoricalPatternRepository;
 import com.waygo.traffic.application.port.outbound.RoadSegmentRepository;
 import com.waygo.traffic.application.port.outbound.TrafficAnomalyRepository;
 import com.waygo.traffic.application.port.outbound.TrafficSnapshotRepository;
-
-
-
-
-
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
@@ -33,21 +30,33 @@ public class SampleDataSeeder {
     private final HistoricalPatternRepository historicalPatternRepository;
     private final TrafficSnapshotRepository trafficSnapshotRepository;
     private final TrafficAnomalyRepository trafficAnomalyRepository;
+    private final AppUserRepository appUserRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public SampleDataSeeder(
             RoadSegmentRepository roadSegmentRepository,
             HistoricalPatternRepository historicalPatternRepository,
             TrafficSnapshotRepository trafficSnapshotRepository,
-            TrafficAnomalyRepository trafficAnomalyRepository
+            TrafficAnomalyRepository trafficAnomalyRepository,
+            AppUserRepository appUserRepository,
+            PasswordEncoder passwordEncoder
     ) {
         this.roadSegmentRepository = roadSegmentRepository;
         this.historicalPatternRepository = historicalPatternRepository;
         this.trafficSnapshotRepository = trafficSnapshotRepository;
         this.trafficAnomalyRepository = trafficAnomalyRepository;
+        this.appUserRepository = appUserRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
     public void seed() {
+        if (appUserRepository.findByUsername("admin").isEmpty()) {
+            AppUser admin = new AppUser("admin", passwordEncoder.encode("admin123"), "ADMIN");
+            appUserRepository.save(admin);
+            System.out.println("Default admin user created: admin / admin123");
+        }
+
         List<RoadSegment> segments = List.of(
                 new RoadSegment(
                         UUID.fromString("11111111-1111-1111-1111-111111111111"),

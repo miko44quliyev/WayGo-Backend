@@ -4,12 +4,9 @@ import com.waygo.report.domain.entity.UserReport;
 import com.waygo.traffic.domain.entity.RoadIncident;
 import com.waygo.traffic.domain.entity.TrafficAnomaly;
 
-
 import com.waygo.traffic.application.usecase.GetIncidentsUseCase;
 import com.waygo.traffic.application.port.outbound.TrafficAnomalyRepository;
 import com.waygo.report.application.port.outbound.UserReportRepository;
-
-
 
 import org.springframework.stereotype.Service;
 
@@ -34,15 +31,17 @@ public class GetIncidentsService implements GetIncidentsUseCase {
     public List<RoadIncident> handle() {
         List<RoadIncident> incidents = new ArrayList<>();
         for (UserReport report : userReportRepository.findAll()) {
-            incidents.add(new RoadIncident(
-                    UUID.nameUUIDFromBytes((report.userId() + report.segmentId().toString() + report.createdAt()).getBytes(StandardCharsets.UTF_8)),
-                    report.segmentId(),
-                    report.type().name(),
-                    "USER_REPORT",
-                    report.description(),
-                    report.createdAt(),
-                    true
-            ));
+            if (report.status() == com.waygo.report.domain.valueobject.ReportStatus.APPROVED) {
+                incidents.add(new RoadIncident(
+                        UUID.nameUUIDFromBytes((report.userId() + report.segmentId().toString() + report.createdAt()).getBytes(StandardCharsets.UTF_8)),
+                        report.segmentId(),
+                        report.type().name(),
+                        "USER_REPORT",
+                        report.description(),
+                        report.createdAt(),
+                        true
+                ));
+            }
         }
         for (TrafficAnomaly anomaly : trafficAnomalyRepository.findActive()) {
             incidents.add(new RoadIncident(
