@@ -3,7 +3,7 @@ package com.waygo.traffic.application.service;
 import com.waygo.weather.domain.entity.WeatherSnapshot;
 
 
-import com.waygo.traffic.application.dto.GetWeatherUseCase;
+import com.waygo.traffic.application.usecase.GetWeatherUseCase;
 import com.waygo.weather.application.dto.WeatherQuery;
 import com.waygo.weather.application.port.outbound.WeatherGateway;
 

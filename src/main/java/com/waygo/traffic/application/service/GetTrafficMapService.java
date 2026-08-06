@@ -7,7 +7,7 @@ import com.waygo.traffic.domain.entity.TrafficMapView;
 import com.waygo.traffic.domain.entity.TrafficSnapshot;
 
 
-import com.waygo.traffic.application.dto.GetTrafficMapUseCase;
+import com.waygo.traffic.application.usecase.GetTrafficMapUseCase;
 import com.waygo.traffic.application.port.outbound.HistoricalPatternRepository;
 import com.waygo.traffic.application.port.outbound.RoadSegmentRepository;
 import com.waygo.traffic.application.port.outbound.TrafficAnomalyRepository;

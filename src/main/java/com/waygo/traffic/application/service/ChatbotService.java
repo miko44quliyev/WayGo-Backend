@@ -1,9 +1,9 @@
 package com.waygo.traffic.application.service;
 
-import com.waygo.traffic.application.dto.GetAnomaliesUseCase;
-import com.waygo.traffic.application.dto.GetCityStatsUseCase;
-import com.waygo.traffic.application.dto.GetIncidentsUseCase;
-import com.waygo.traffic.application.dto.GetWeatherUseCase;
+import com.waygo.traffic.application.usecase.GetAnomaliesUseCase;
+import com.waygo.traffic.application.usecase.GetCityStatsUseCase;
+import com.waygo.traffic.application.usecase.GetIncidentsUseCase;
+import com.waygo.traffic.application.usecase.GetWeatherUseCase;
 import com.waygo.weather.application.dto.WeatherQuery;
 import com.waygo.traffic.domain.entity.CityStats;
 import com.waygo.traffic.domain.entity.RoadIncident;

@@ -5,7 +5,7 @@ import com.waygo.traffic.domain.entity.RoadIncident;
 import com.waygo.traffic.domain.entity.TrafficAnomaly;
 
 
-import com.waygo.traffic.application.dto.GetIncidentsUseCase;
+import com.waygo.traffic.application.usecase.GetIncidentsUseCase;
 import com.waygo.traffic.application.port.outbound.TrafficAnomalyRepository;
 import com.waygo.report.application.port.outbound.UserReportRepository;
 

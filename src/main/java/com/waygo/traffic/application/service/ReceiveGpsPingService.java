@@ -11,7 +11,7 @@ import com.waygo.traffic.domain.valueobject.AnomalyStatus;
 
 import com.waygo.traffic.application.dto.GpsPingReceipt;
 import com.waygo.traffic.application.dto.ReceiveGpsPingCommand;
-import com.waygo.traffic.application.dto.ReceiveGpsPingUseCase;
+import com.waygo.traffic.application.usecase.ReceiveGpsPingUseCase;
 import com.waygo.traffic.application.port.outbound.IncidentRealtimePublisher;
 import com.waygo.traffic.application.port.outbound.GpsPingRepository;
 import com.waygo.traffic.application.port.outbound.HistoricalPatternRepository;

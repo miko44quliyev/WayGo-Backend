@@ -3,7 +3,7 @@ package com.waygo.traffic.application.service;
 import com.waygo.traffic.domain.entity.TrafficAnomaly;
 
 
-import com.waygo.traffic.application.dto.GetAnomaliesUseCase;
+import com.waygo.traffic.application.usecase.GetAnomaliesUseCase;
 import com.waygo.traffic.application.port.outbound.TrafficAnomalyRepository;
 
 import org.springframework.stereotype.Service;

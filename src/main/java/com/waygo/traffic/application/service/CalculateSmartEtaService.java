@@ -7,7 +7,7 @@ import com.waygo.traffic.domain.entity.TrafficSnapshot;
 import com.waygo.traffic.domain.valueobject.EtaWindow;
 
 
-import com.waygo.traffic.application.dto.CalculateSmartEtaUseCase;
+import com.waygo.traffic.application.usecase.CalculateSmartEtaUseCase;
 import com.waygo.traffic.application.port.outbound.HistoricalPatternRepository;
 import com.waygo.traffic.application.port.outbound.RoadSegmentRepository;
 import com.waygo.traffic.application.port.outbound.TrafficPredictionEngine;

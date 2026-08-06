@@ -5,7 +5,7 @@ import com.waygo.traffic.domain.entity.CityStats;
 import com.waygo.traffic.domain.entity.TrafficSnapshot;
 
 
-import com.waygo.traffic.application.dto.GetCityStatsUseCase;
+import com.waygo.traffic.application.usecase.GetCityStatsUseCase;
 import com.waygo.traffic.application.port.outbound.GpsPingRepository;
 import com.waygo.traffic.application.port.outbound.TrafficSnapshotRepository;
 

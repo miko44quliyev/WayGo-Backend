@@ -4,7 +4,7 @@ import com.waygo.traffic.domain.entity.TrafficForecast;
 
 
 import com.waygo.traffic.application.dto.PredictTrafficQuery;
-import com.waygo.traffic.application.dto.PredictTrafficUseCase;
+import com.waygo.traffic.application.usecase.PredictTrafficUseCase;
 import com.waygo.traffic.application.port.outbound.HistoricalPatternRepository;
 import com.waygo.traffic.application.port.outbound.RoadSegmentRepository;
 import com.waygo.traffic.application.port.outbound.TrafficPredictionEngine;

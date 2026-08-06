@@ -1,4 +1,4 @@
-package com.waygo.traffic.application.dto;
+package com.waygo.traffic.application.usecase;
 
 import com.waygo.traffic.domain.entity.TrafficMapView;
 
