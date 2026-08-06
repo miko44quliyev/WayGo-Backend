@@ -51,12 +51,25 @@ public class UserReport {
         this.status = status == null ? ReportStatus.PENDING : status;
     }
 
+    @com.fasterxml.jackson.annotation.JsonProperty("id")
     public UUID id() { return id; }
+    
+    @com.fasterxml.jackson.annotation.JsonProperty("userId")
     public UUID userId() { return userId; }
+    
+    @com.fasterxml.jackson.annotation.JsonProperty("segmentId")
     public UUID segmentId() { return segmentId; }
+    
+    @com.fasterxml.jackson.annotation.JsonProperty("type")
     public ReportType type() { return type; }
+    
+    @com.fasterxml.jackson.annotation.JsonProperty("description")
     public String description() { return description; }
+    
+    @com.fasterxml.jackson.annotation.JsonProperty("createdAt")
     public Instant createdAt() { return createdAt; }
+    
+    @com.fasterxml.jackson.annotation.JsonProperty("status")
     public ReportStatus status() { return status; }
 
     public UserReport withStatus(ReportStatus newStatus) {
