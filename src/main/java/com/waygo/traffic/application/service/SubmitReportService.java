@@ -25,7 +25,9 @@ public class SubmitReportService implements SubmitReportUseCase {
                 command.type(),
                 command.description(),
                 command.createdAt(),
-                null // Defaults to PENDING
+                null, // Defaults to PENDING
+                command.latitude(),
+                command.longitude()
         );
         userReportRepository.save(report);
 

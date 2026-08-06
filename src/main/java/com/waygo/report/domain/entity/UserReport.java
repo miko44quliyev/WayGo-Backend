@@ -39,9 +39,15 @@ public class UserReport {
     @Column(nullable = false)
     private ReportStatus status;
 
+    @Column(nullable = true)
+    private Double latitude;
+
+    @Column(nullable = true)
+    private Double longitude;
+
     protected UserReport() {}
 
-    public UserReport(UUID id, UUID userId, UUID segmentId, ReportType type, String description, Instant createdAt, ReportStatus status) {
+    public UserReport(UUID id, UUID userId, UUID segmentId, ReportType type, String description, Instant createdAt, ReportStatus status, Double latitude, Double longitude) {
         this.id = id == null ? UUID.randomUUID() : id;
         this.userId = userId;
         this.segmentId = segmentId;
@@ -49,6 +55,8 @@ public class UserReport {
         this.description = description;
         this.createdAt = createdAt;
         this.status = status == null ? ReportStatus.PENDING : status;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     @com.fasterxml.jackson.annotation.JsonProperty("id")
@@ -72,7 +80,13 @@ public class UserReport {
     @com.fasterxml.jackson.annotation.JsonProperty("status")
     public ReportStatus status() { return status; }
 
+    @com.fasterxml.jackson.annotation.JsonProperty("latitude")
+    public Double latitude() { return latitude; }
+
+    @com.fasterxml.jackson.annotation.JsonProperty("longitude")
+    public Double longitude() { return longitude; }
+
     public UserReport withStatus(ReportStatus newStatus) {
-        return new UserReport(this.id, this.userId, this.segmentId, this.type, this.description, this.createdAt, newStatus);
+        return new UserReport(this.id, this.userId, this.segmentId, this.type, this.description, this.createdAt, newStatus, this.latitude, this.longitude);
     }
 }

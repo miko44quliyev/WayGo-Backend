@@ -11,7 +11,9 @@ public record RoadIncident(
         String source,
         String description,
         Instant createdAt,
-        boolean active
+        boolean active,
+        Double latitude,
+        Double longitude
 ) {
 
     public RoadIncident {

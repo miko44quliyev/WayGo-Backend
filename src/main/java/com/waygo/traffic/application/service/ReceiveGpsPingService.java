@@ -111,7 +111,9 @@ public class ReceiveGpsPingService implements ReceiveGpsPingUseCase {
                     "ANOMALY_DETECTION",
                     anomaly.description(),
                     command.timestamp(),
-                    true
+                    true,
+                    null,
+                    null
             ));
         }
 

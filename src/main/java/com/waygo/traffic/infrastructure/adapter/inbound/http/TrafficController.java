@@ -226,7 +226,9 @@ public class TrafficController {
                 request.segmentId(),
                 request.type(),
                 request.description(),
-                request.createdAt()
+                request.createdAt(),
+                request.latitude(),
+                request.longitude()
         ));
         return ResponseEntity.status(HttpStatus.CREATED).body(report);
     }
@@ -273,7 +275,9 @@ public class TrafficController {
             @NotNull UUID segmentId,
             @NotNull ReportType type,
             @NotBlank String description,
-            @NotNull Instant createdAt
+            @NotNull Instant createdAt,
+            Double latitude,
+            Double longitude
     ) {
     }
 

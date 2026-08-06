@@ -39,7 +39,9 @@ public class GetIncidentsService implements GetIncidentsUseCase {
                         "USER_REPORT",
                         report.description(),
                         report.createdAt(),
-                        true
+                        true,
+                        report.latitude(),
+                        report.longitude()
                 ));
             }
         }
@@ -51,7 +53,9 @@ public class GetIncidentsService implements GetIncidentsUseCase {
                     "ANOMALY_DETECTION",
                     anomaly.description(),
                     anomaly.detectedAt(),
-                    true
+                    true,
+                    null,
+                    null
             ));
         }
         incidents.sort(Comparator.comparing(RoadIncident::createdAt).reversed());

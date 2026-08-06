@@ -56,7 +56,9 @@ public class AdminIncidentService {
                     "USER_REPORT",
                     approved.description(),
                     approved.createdAt(),
-                    true
+                    true,
+                    approved.latitude(),
+                    approved.longitude()
             );
             trafficAnomalyRepository.save(new TrafficAnomaly(
                     approved.segmentId(),
