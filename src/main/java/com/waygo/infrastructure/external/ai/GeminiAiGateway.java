@@ -1,5 +1,7 @@
 package com.waygo.infrastructure.external.ai;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +16,11 @@ public class GeminiAiGateway {
 
     private final String apiKey;
     private final HttpClient httpClient;
+    private final ObjectMapper objectMapper;
 
-    public GeminiAiGateway(@Value("${GEMINI_API_KEY:AIzaSyB-DEFAULT-WAYGO-KEY}") String apiKey) {
+    public GeminiAiGateway(@Value("${gemini.api-key:AIzaSyCbFQqYt5-9d7zA5uHHQTW31x3yhrxtrKo}") String apiKey, ObjectMapper objectMapper) {
         this.apiKey = apiKey;
+        this.objectMapper = objectMapper;
         this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(6))
                 .build();
@@ -30,7 +34,7 @@ public class GeminiAiGateway {
         try {
             String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
 
-            // Escaping prompt JSON
+            // Escaping prompt JSON safely
             String escapedPrompt = promptWithContext
                     .replace("\\", "\\\\")
                     .replace("\"", "\\\"")
@@ -59,19 +63,17 @@ public class GeminiAiGateway {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200 && response.body() != null) {
-                String body = response.body();
-                int textIdx = body.indexOf("\"text\": \"");
-                if (textIdx != -1) {
-                    int start = textIdx + 9;
-                    int end = body.indexOf("\"", start);
-                    if (end != -1) {
-                        String rawText = body.substring(start, end);
-                        return rawText.replace("\\n", "\n").replace("\\\"", "\"").trim();
-                    }
+                JsonNode rootNode = objectMapper.readTree(response.body());
+                JsonNode textNode = rootNode.at("/candidates/0/content/parts/0/text");
+                if (!textNode.isMissingNode()) {
+                    return textNode.asText().trim();
                 }
+            } else {
+                System.err.println("[GeminiAiGateway] Error: HTTP " + response.statusCode() + " - " + response.body());
             }
         } catch (Exception e) {
             System.err.println("[GeminiAiGateway] AI REST API Exception: " + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
