@@ -4,6 +4,7 @@ import com.waygo.report.domain.entity.UserReport;
 import com.waygo.traffic.application.dto.SubmitReportCommand;
 import com.waygo.report.application.usecase.SubmitReportUseCase;
 import com.waygo.report.application.port.outbound.UserReportRepository;
+import com.waygo.traffic.application.port.outbound.IncidentRealtimePublisher;
 
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,11 @@ import org.springframework.stereotype.Service;
 public class SubmitReportService implements SubmitReportUseCase {
 
     private final UserReportRepository userReportRepository;
+    private final IncidentRealtimePublisher incidentRealtimePublisher;
 
-    public SubmitReportService(UserReportRepository userReportRepository) {
+    public SubmitReportService(UserReportRepository userReportRepository, IncidentRealtimePublisher incidentRealtimePublisher) {
         this.userReportRepository = userReportRepository;
+        this.incidentRealtimePublisher = incidentRealtimePublisher;
     }
 
     @Override
@@ -31,8 +34,8 @@ public class SubmitReportService implements SubmitReportUseCase {
         );
         userReportRepository.save(report);
 
-        // We no longer publish to IncidentRealtimePublisher here. 
-        // This will be done when an Admin approves the report.
+        // Publish to Admin UI
+        incidentRealtimePublisher.publishReportPending(report);
 
         return report;
     }
