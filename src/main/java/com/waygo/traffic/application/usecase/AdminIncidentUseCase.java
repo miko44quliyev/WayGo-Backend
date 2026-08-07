@@ -1,4 +1,4 @@
-package com.waygo.traffic.application.service;
+package com.waygo.traffic.application.usecase;
 
 import com.waygo.report.application.port.outbound.UserReportRepository;
 import com.waygo.report.domain.entity.UserReport;
@@ -17,13 +17,13 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class AdminIncidentService {
+public class AdminIncidentUseCase {
 
     private final UserReportRepository userReportRepository;
     private final TrafficAnomalyRepository trafficAnomalyRepository;
     private final IncidentRealtimePublisher incidentRealtimePublisher;
 
-    public AdminIncidentService(UserReportRepository userReportRepository,
+    public AdminIncidentUseCase(UserReportRepository userReportRepository,
                                 TrafficAnomalyRepository trafficAnomalyRepository,
                                 IncidentRealtimePublisher incidentRealtimePublisher) {
         this.userReportRepository = userReportRepository;
@@ -83,3 +83,5 @@ public class AdminIncidentService {
         userReportRepository.save(rejected);
     }
 }
+
+

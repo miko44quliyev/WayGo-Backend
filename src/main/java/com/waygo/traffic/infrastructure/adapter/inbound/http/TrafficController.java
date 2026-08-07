@@ -27,7 +27,7 @@ import com.waygo.traffic.domain.entity.TrafficSnapshot;
 import com.waygo.weather.application.dto.WeatherQuery;
 import com.waygo.weather.domain.entity.WeatherSnapshot;
 
-import com.waygo.traffic.application.service.ChatbotService;
+import com.waygo.traffic.application.usecase.ChatbotUseCase;
 import com.waygo.traffic.infrastructure.adapter.outbound.external.TomTomMapsGateway;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -63,7 +63,7 @@ public class TrafficController {
     private final GetWeatherUseCase getWeatherUseCase;
     private final CalculateSmartEtaUseCase calculateSmartEtaUseCase;
     private final TomTomMapsGateway tomTomMapsGateway;
-    private final ChatbotService chatbotService;
+    private final ChatbotUseCase ChatbotUseCase;
 
     public TrafficController(
             ReceiveGpsPingUseCase receiveGpsPingUseCase,
@@ -76,7 +76,7 @@ public class TrafficController {
             GetWeatherUseCase getWeatherUseCase,
             CalculateSmartEtaUseCase calculateSmartEtaUseCase,
             TomTomMapsGateway tomTomMapsGateway,
-            ChatbotService chatbotService
+            ChatbotUseCase ChatbotUseCase
     ) {
         this.receiveGpsPingUseCase = receiveGpsPingUseCase;
         this.getTrafficMapUseCase = getTrafficMapUseCase;
@@ -88,7 +88,7 @@ public class TrafficController {
         this.getWeatherUseCase = getWeatherUseCase;
         this.calculateSmartEtaUseCase = calculateSmartEtaUseCase;
         this.tomTomMapsGateway = tomTomMapsGateway;
-        this.chatbotService = chatbotService;
+        this.ChatbotUseCase = ChatbotUseCase;
     }
 
     @PostMapping("/gps-ping")
@@ -236,7 +236,7 @@ public class TrafficController {
     @PostMapping("/chat")
     public ResponseEntity<ChatResponse> handleChat(@RequestBody ChatRequest request) {
         String msg = (request != null) ? request.message() : "";
-        String reply = chatbotService.processUserQuery(msg);
+        String reply = ChatbotUseCase.processUserQuery(msg);
         return ResponseEntity.ok(new ChatResponse(reply));
     }
 
@@ -289,3 +289,4 @@ public class TrafficController {
         }
     }
 }
+

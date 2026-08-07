@@ -1,23 +1,9 @@
 package com.waygo.config.infrastructure.realtime;
 
+import com.corundumstudio.socketio.SocketIOServer;
+import com.waygo.traffic.application.port.outbound.IncidentRealtimePublisher;
 import com.waygo.traffic.domain.entity.IncidentEvent;
 import com.waygo.traffic.domain.entity.RoadIncident;
-
-
-import com.corundumstudio.socketio.SocketIOServer;
-import com.waygo.traffic.application.port.outbound.IncidentRealtimePublisher;
-
-
-import org.springframework.stereotype.Component;
-
-@Component
-public class SocketIoIncidentPublisher implements IncidentRealtimePublisher {
-
-
-import com.corundumstudio.socketio.SocketIOServer;
-import com.waygo.traffic.application.port.outbound.IncidentRealtimePublisher;
-
-
 import org.springframework.stereotype.Component;
 
 @Component

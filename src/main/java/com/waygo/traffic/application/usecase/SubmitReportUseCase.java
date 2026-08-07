@@ -1,25 +1,23 @@
-package com.waygo.traffic.application.service;
+package com.waygo.traffic.application.usecase;
 
 import com.waygo.report.domain.entity.UserReport;
 import com.waygo.traffic.application.dto.SubmitReportCommand;
-import com.waygo.report.application.usecase.SubmitReportUseCase;
 import com.waygo.report.application.port.outbound.UserReportRepository;
 import com.waygo.traffic.application.port.outbound.IncidentRealtimePublisher;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class SubmitReportService implements SubmitReportUseCase {
+public class SubmitReportUseCase {
 
     private final UserReportRepository userReportRepository;
     private final IncidentRealtimePublisher incidentRealtimePublisher;
 
-    public SubmitReportService(UserReportRepository userReportRepository, IncidentRealtimePublisher incidentRealtimePublisher) {
+    public SubmitReportUseCase(UserReportRepository userReportRepository, IncidentRealtimePublisher incidentRealtimePublisher) {
         this.userReportRepository = userReportRepository;
         this.incidentRealtimePublisher = incidentRealtimePublisher;
     }
 
-    @Override
     public UserReport handle(SubmitReportCommand command) {
         UserReport report = new UserReport(
                 null,
@@ -40,3 +38,5 @@ public class SubmitReportService implements SubmitReportUseCase {
         return report;
     }
 }
+
+
