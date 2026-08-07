@@ -10,7 +10,9 @@ public record IncidentEvent(
         String source,
         String description,
         String createdAt,
-        boolean active
+        boolean active,
+        Double latitude,
+        Double longitude
 ) {
     public static IncidentEvent from(RoadIncident incident) {
         return new IncidentEvent(
@@ -21,7 +23,9 @@ public record IncidentEvent(
                 incident.source(),
                 incident.description(),
                 incident.createdAt().toString(),
-                incident.active()
+                incident.active(),
+                incident.latitude(),
+                incident.longitude()
         );
     }
 }

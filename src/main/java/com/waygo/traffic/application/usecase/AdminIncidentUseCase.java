@@ -48,27 +48,25 @@ public class AdminIncidentUseCase {
         UserReport approved = report.withStatus(ReportStatus.APPROVED);
         userReportRepository.save(approved);
 
-        if (approved.type() == ReportType.ACCIDENT || approved.type() == ReportType.ROAD_CLOSED) {
-            RoadIncident incident = new RoadIncident(
-                    UUID.nameUUIDFromBytes((approved.userId() + approved.segmentId().toString() + approved.createdAt()).getBytes(StandardCharsets.UTF_8)),
-                    approved.segmentId(),
-                    approved.type().name(),
-                    "USER_REPORT",
-                    approved.description(),
-                    approved.createdAt(),
-                    true,
-                    approved.latitude(),
-                    approved.longitude()
-            );
-            trafficAnomalyRepository.save(new TrafficAnomaly(
-                    approved.segmentId(),
-                    approved.createdAt(),
-                    3.0,
-                    AnomalyStatus.ACTIVE,
-                    "Admin approved user report confirmed a road incident"
-            ));
-            incidentRealtimePublisher.publishCreated(incident);
-        }
+        RoadIncident incident = new RoadIncident(
+                UUID.nameUUIDFromBytes((approved.userId() + approved.segmentId().toString() + approved.createdAt()).getBytes(StandardCharsets.UTF_8)),
+                approved.segmentId(),
+                approved.type().name(),
+                "USER_REPORT",
+                approved.description(),
+                approved.createdAt(),
+                true,
+                approved.latitude(),
+                approved.longitude()
+        );
+        trafficAnomalyRepository.save(new TrafficAnomaly(
+                approved.segmentId(),
+                approved.createdAt(),
+                3.0,
+                AnomalyStatus.ACTIVE,
+                "Admin approved user report confirmed a road incident"
+        ));
+        incidentRealtimePublisher.publishCreated(incident);
     }
 
     public void rejectReport(UUID reportId) {
