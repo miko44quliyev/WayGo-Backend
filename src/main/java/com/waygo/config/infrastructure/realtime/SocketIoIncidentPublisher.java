@@ -22,6 +22,16 @@ public class SocketIoIncidentPublisher implements IncidentRealtimePublisher {
 
     @Override
     public void publishReportPending(com.waygo.report.domain.entity.UserReport report) {
-        socketIOServer.getBroadcastOperations().sendEvent("report:pending", report);
+        java.util.Map<String, Object> dto = new java.util.HashMap<>();
+        dto.put("id", report.id());
+        dto.put("userId", report.userId());
+        dto.put("segmentId", report.segmentId());
+        dto.put("type", report.type().name());
+        dto.put("description", report.description());
+        dto.put("createdAt", report.createdAt().toString()); // Fixes Jackson Instant error
+        dto.put("status", report.status().name());
+        dto.put("latitude", report.latitude());
+        dto.put("longitude", report.longitude());
+        socketIOServer.getBroadcastOperations().sendEvent("report:pending", dto);
     }
 }
